@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body class="bg-light">
+
+<div class="container vh-100 d-flex justify-content-center align-items-center">
+    <div class="card shadow-lg border-0 rounded-4 p-4" style="width: 100%; max-width: 450px;">
+
+        <div class="text-center mb-4">
+            <h3 class="fw-bold">Create Account</h3>
+            <p class="text-muted small">Join MVP Reports</p>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger py-2">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text"
+                       name="first_name"
+                       class="form-control form-control-lg"
+                       placeholder="Enter your first name"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <input type="text"
+                       name="last_name"
+                       class="form-control form-control-lg"
+                       placeholder="Enter your last name"
+                       required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email"
+                       name="email"
+                       class="form-control form-control-lg"
+                       placeholder="Enter your email"
+                       required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password"
+                       name="password1"
+                       class="form-control form-control-lg"
+                       placeholder="Create a password"
+                       required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Confirm Password</label>
+                <input type="password"
+                       name="password2"
+                       class="form-control form-control-lg"
+                       placeholder="Confirm your password"
+                       required>
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg rounded-3">
+                    Create Account
+                </button>
+            </div>
+
+            <div class="text-center mt-4">
+                <span class="text-muted small">
+                    Already have an account?
+                    <a href="{% url 'login' %}" class="fw-semibold text-decoration-none">
+                        Login
+                    </a>
+                </span>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+</body>
+</html>

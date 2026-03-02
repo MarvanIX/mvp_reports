@@ -1,0 +1,14 @@
+body {
+    background: linear-gradient(135deg, #4e73df, #1cc88a);
+}
+
+.card {
+    backdrop-filter: blur(10px);
+}
+a {
+    transition: 0.2s ease-in-out;
+}
+
+a:hover {
+    opacity: 0.7;
+}
