@@ -30,11 +30,11 @@ def user_register(request):
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
-            return redirect('users/register')
+            return redirect('users/register.html')
 
         if User.objects.filter(email=email).exists():
             messages.error(request, "Email already registered.")
-            return redirect('users/register')
+            return redirect('users/register.html')
 
         user = User.objects.create_user(
             email=email,
@@ -44,6 +44,6 @@ def user_register(request):
         )
 
         login(request, user)
-        return redirect('dashboard')
+        return redirect('home')
 
-    return render(request, 'users/register')
+    return render(request, 'users/register.html')
