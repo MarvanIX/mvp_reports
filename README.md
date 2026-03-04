@@ -77,4 +77,9 @@ python manage.py runserver
 ```
 7. Access the app in your browser at http://localhost:8000/login/
 
+9.
+---
+
+## Usage
+It is recommended that you firstly log in with the master user. In order to create new companies, this way the flow of work is better since now you will be able to sign up and associate that user to a company.
 ---
