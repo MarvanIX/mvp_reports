@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.core.mail import send_mail
-from .models import MagicLink, Report, Company
-
+from .models import MagicLink, Report, Company, Notification
+from django.http import JsonResponse
 
 @login_required
 def home(request):
@@ -53,6 +54,7 @@ def reports_view(request):
     return render(request, "reports/reports.html", {
         "reports": reports
     })
+
 def public_reports(request, token):
     magic_link = get_object_or_404(MagicLink, token=token, is_active=True)
     company = magic_link.company
@@ -63,7 +65,7 @@ def public_reports(request, token):
         is_anonymous = request.POST.get("anonymous") == "on"
         email = request.POST.get("email") if not is_anonymous else None
 
-        Report.objects.create(
+        report = Report.objects.create(
             company=company,
             title=title,
             description=description,
@@ -78,7 +80,30 @@ def public_reports(request, token):
         #         from_email="noreply@yourapp.com",
         #         recipient_list=[manager.email],
         #     )
+        for manager in company.managers.all():
+            Notification.objects.create(
+                user=manager,
+                report=report,
+                message=f"A new report was submitted for {company.name}"
+            )
         return render(request, "reports/success.html")
 
-    return render(request, "reports/submit_report.html", {"company": company})
+    return render(request, "reports/submit_report.html", {
+        "company": company.name
+    })
 
+@login_required
+@require_POST
+def mark_notification_read(request, pk):
+    try:
+        notification = Notification.objects.get(
+            pk=pk,
+            user=request.user
+        )
+        notification.is_read = True
+        notification.save()
+
+        return JsonResponse({"success": True})
+
+    except Notification.DoesNotExist:
+        return JsonResponse({"success": False}, status=400)

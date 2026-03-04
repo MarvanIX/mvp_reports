@@ -75,7 +75,14 @@
                        placeholder="Confirm your password"
                        required>
             </div>
-
+            <div class="mb-4">
+                <select name="company" class="form-select mb-3" required>
+                        <option value="">Select your company</option>
+                        {% for company in companies %}
+                            <option value="{{ company.id }}">{{ company.name }}</option>
+                        {% endfor %}
+                    </select>
+            </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary btn-lg rounded-3">
                     Create Account

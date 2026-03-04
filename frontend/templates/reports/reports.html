@@ -5,39 +5,61 @@
 
 {% block content %}
 <div class="container mt-5">
-
     <h2 class="text-center mb-4">Reports</h2>
-
-    <ul class="list-group">
-        {% for report in reports %}
-        <li class="list-group-item report-row d-flex justify-content-between align-items-center"
-            data-id="{{ report.id }}"
-            data-status="{{ report.status }}"
-            style="cursor:pointer;">
-
-            <div>
-                <strong>{{ report.company.name }}</strong> - {{ report.title }}
-                {% if report.is_anonymous %}
-                    <span class="badge bg-secondary ms-2">Anonymous</span>
-                {% else %}
-                    <span class="badge bg-info ms-2">Submitted with Email</span>
-                {% endif %}
-            </div>
-
-            <div>
-                <span class="badge 
-                    {% if report.status == 'new' %}bg-primary{% elif report.status == 'in_progress' %}bg-warning{% else %}bg-success{% endif %}">
-                    {{ report.get_status_display }}
-                </span>
-                <small class="text-muted ms-3">{{ report.created_at|date:"M d, Y H:i" }}</small>
-            </div>
-
-        </li>
-        {% empty %}
-        <li class="list-group-item text-center">No reports yet.</li>
-        {% endfor %}
-    </ul>
-
+<div class="card shadow-sm">
+    <div class="card-body">
+        {% if reports %}
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Company</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                <tr class="report-row"
+                    data-id="{{ report.id }}"
+                    data-status="{{ report.status }}"
+                    style="cursor:pointer;">
+                    <td><strong>{{ report.company.name }}</strong></td>
+                    <td>{{ report.title }}</td>
+                    <td>
+                        {% if report.email %}
+                            <span class="badge bg-info">{{ report.email }}</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Anonymous</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span class="badge 
+                            {% if report.status == 'new' %}
+                                bg-primary
+                            {% elif report.status == 'in_progress' %}
+                                bg-warning text-dark
+                            {% else %}
+                                bg-success
+                            {% endif %}">
+                            {{ report.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <small class="text-muted">
+                            {{ report.created_at|date:"M d, Y H:i" }}
+                        </small>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted text-center mb-0">No reports yet.</p>
+        {% endif %}
+    </div>
+</div>
 </div>
 {% endblock %}
 

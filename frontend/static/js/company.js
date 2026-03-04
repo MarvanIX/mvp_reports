@@ -22,12 +22,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ROW SELECTION
     document.querySelectorAll(".company-row").forEach(row => {
-        row.addEventListener("click", function () {
-            document.querySelectorAll(".company-row")
-                .forEach(r => r.classList.remove("selected"));
-            this.classList.add("selected");
-            selectedRow = this;
-        });
+    row.addEventListener("click", function () {
+        document.querySelectorAll(".company-row")
+            .forEach(r => r.classList.remove("table-primary"));
+
+        this.classList.add("table-primary");
+        selectedRow = this;
+    });
     });
     openCreateBtn.addEventListener("click", function () {
 

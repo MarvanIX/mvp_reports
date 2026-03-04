@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .models import User
-from django.contrib.auth.decorators import login_required
-
+from reports.models import Company
 
 def user_login(request):
     if request.method == 'POST':
@@ -21,12 +20,15 @@ def user_login(request):
     return render(request, 'users/login.html')
 
 def user_register(request):
+    companies = Company.objects.all() 
+
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         email = request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
+        company_id = request.POST.get('company') 
 
         if password1 != password2:
             messages.error(request, "Passwords do not match.")
@@ -43,7 +45,11 @@ def user_register(request):
             last_name=last_name
         )
 
+        if company_id:
+            company = get_object_or_404(Company, id=company_id)
+            company.managers.add(user)
+
         login(request, user)
         return redirect('home')
 
-    return render(request, 'users/register.html')
+    return render(request, 'users/register.html', {'companies': companies})
