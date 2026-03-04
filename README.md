@@ -42,7 +42,7 @@ A Django-based MVP for company reporting. Employees can submit anonymous or conf
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/mvp_reports.git
+git clone https://github.com/MarvanIX/mvp_reports.git
 cd mvp_reports
 ```
 2. Install dependencies:
