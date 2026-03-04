@@ -16,9 +16,11 @@
                     id="openEditModal">
                 Edit Company
             </button>
-            <button class="btn btn-outline-danger px-4" id="openDeleteModal">
-                Delete Company
-            </button>
+            {% if request.user.is_superuser %}
+                <button class="btn btn-outline-danger px-4" id="openDeleteModal">
+                    Delete Company
+                </button>
+            {% endif %}
             <div class="modal fade" id="companyModal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
