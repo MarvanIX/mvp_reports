@@ -64,7 +64,6 @@ def public_reports(request, token):
         description = request.POST.get("description")
         is_anonymous = request.POST.get("anonymous") == "on"
         email = request.POST.get("email") if not is_anonymous else None
-
         report = Report.objects.create(
             company=company,
             title=title,

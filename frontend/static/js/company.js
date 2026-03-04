@@ -31,9 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     });
     openCreateBtn.addEventListener("click", function () {
-
         selectedRow = null;
-
         companyIdInput.value = "";
         companyNameInput.value = "";
 
@@ -43,7 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.show();
     });
     openEditBtn.addEventListener("click", function () {
-
         if (!selectedRow) {
             alert("Please select a company first.");
             return;
